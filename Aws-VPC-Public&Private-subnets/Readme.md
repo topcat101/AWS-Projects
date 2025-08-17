@@ -60,8 +60,41 @@ To create a route table, navigate to VPC > Route Tables in the AWS Management Co
 
 Once both the public and private route tables have been created, the next step is to edit the routes. Start with the public route table. By default, a local route is already present, which enables communication within the VPC. Keep this route in place and then add a new route that enables internet access.
 
-Set the destination to 0.0.0.0/0 and the target to the Internet Gateway. The destination 0.0.0.0/0 represents all IPv4 addresses, meaning any traffic can access your VPC’s CIDR block will be directed through the Internet Gateway. This allows instances in the public subnet to access the internet.
+Set the destination to 0.0.0.0/0 and the target to the Internet Gateway. The destination 0.0.0.0/0 represents all IPv4 addresses, meaning any traffic that can access your VPC’s CIDR block will be directed through the Internet Gateway. This allows instances in the public subnet to access the internet.
 
 <img width="602" height="365" alt="RouteTable(2)" src="https://github.com/user-attachments/assets/4f556653-ff98-455e-86d5-e0fc5cce00ee" />
 
 For the private route table, you only need to associate it with the private subnet. This ensures that the private subnet follows the rules defined in the private route table. By default, it will only have a local route, meaning traffic is restricted to communication within the VPC.
+
+# Create a Bastion Host
+A Bastion Host, also known as a Jump Server, acts as a secure gateway to access resources in the private subnet from the public subnet. Instead of exposing private instances directly to the internet, you connect to the Bastion Host (which resides in the public subnet) and then use it to securely access instances within the private subnet.
+
+To create a Bastion Host, you must first launch an EC2 instance. You can choose any operating system (e.g., Amazon Linux, Ubuntu, or Windows Server) and select an instance type such as t3.micro for testing or small-scale environments.
+During setup, you will need to create or select an existing key pair (generating a .pem file), which allows you to securely connect to the instance via SSH (Linux) or RDP (Windows).
+
+In the network settings, assign the instance to the VPC you created earlier, and place it inside the public subnet. Be sure to enable Auto-assign Public IP, so the instance can be accessed from the internet.
+
+This instance will serve as your Bastion Host, enabling secure access to resources within your private subnet.
+
+<img width="597" height="278" alt="Bastion Host(1)" src="https://github.com/user-attachments/assets/07ffad86-d77f-406e-a981-223ce10acfb4" />
+
+Next, assign a Security Group to the instance and provide it with a descriptive name. Ensure that the security group allows SSH (port 22) access to the Bastion Host from your local machine (preferably restricted to your own IP address for security).
+
+Once the security group is configured, you can proceed to launch the instance. At this point, your Bastion Host will be ready to use for secure access to your private subnet re-sources.
+
+
+# Create a private instance
+The private host should be created within the private subnet of your VPC. The process is similar to creating the Bastion Host. When selecting a key pair, use the same key pair that was created for your previous EC2 instance.
+
+In the Network Settings, assign the instance to your VPC and select the private subnet. Disable Auto-assign Public IP, since this instance will not require direct access to the public internet.
+
+Next, configure a new Security Group. You can give it any descriptive name. For in-bound rules, choose Custom TCP Rule (SSH, port 22) and set the Source to the IP range of the public subnet (e.g., 10.0.20.0/24). This ensures that only the Bastion Host (in the public subnet) can access the private instance via SSH. Add a short description such as “SSH access via Bastion.”
+
+Once complete, launch the instance. The private host will now be securely deployed within the private subnet and accessible only through the Bastion Host.
+
+<img width="602" height="428" alt="Private(1)" src="https://github.com/user-attachments/assets/7048cb2f-96be-4773-b605-b681d8feb38a" />
+ 
+Note: The private server does not have a public IPv4 address assigned, which means it cannot be accessed directly from the internet. It can only be reached through the Basti-on Host in the public subnet.
+
+
+
