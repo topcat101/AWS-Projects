@@ -14,8 +14,8 @@ Having a VPC within your infrastructure is important because it allows you to co
 
 To get started, go to the AWS Management Console and search for VPC. Once you are in the VPC service, navigate to Your VPCs > Create VPC. This will initiate the process of creating a VPC.
 
-
 <img width="602" height="196" alt="AWS VPC - (1)" src="https://github.com/user-attachments/assets/c5f9d044-bae2-4162-9fb0-29af043ead52" />
 
-
 After entering the Create VPC section, enter the required details such as the Name and IPv4 CIDR block. After completing the configuration, click Create VPC. Your VPC will then be successfully created. Following the rfc1918 standards I used 10.0.0.0/16
+
+<img width="508" height="265" alt="AWS VPC - (2)" src="https://github.com/user-attachments/assets/f4a1ec61-0221-4de5-a593-0495378b7632" />
