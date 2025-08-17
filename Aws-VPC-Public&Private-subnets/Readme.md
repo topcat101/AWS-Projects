@@ -16,3 +16,6 @@ To get started, go to the AWS Management Console and search for VPC. Once you ar
 
 
 <img width="602" height="196" alt="AWS VPC - (1)" src="https://github.com/user-attachments/assets/c5f9d044-bae2-4162-9fb0-29af043ead52" />
+
+
+After entering the Create VPC section, enter the required details such as the Name and IPv4 CIDR block. After completing the configuration, click Create VPC. Your VPC will then be successfully created. Following the rfc1918 standards I used 10.0.0.0/16
