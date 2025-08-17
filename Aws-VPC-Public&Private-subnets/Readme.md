@@ -32,3 +32,14 @@ To access the Internet Gateway, navigate to VPC > Internet Gateways. After enter
 Once the Internet Gateway has been created, you need to associate it with a VPC by attaching it to that VPC.
 
 <img width="602" height="102" alt="IGW(2)" src="https://github.com/user-attachments/assets/043f830b-78ac-47aa-9802-4d49120dedf9" />
+
+# Subnet for both public and private
+
+Now that the Internet Gateway is attached to the VPC, the next step is to create and connect subnets within that VPC. It is important to ensure that the subnets are created in the correct Availability Zone (for example, eu-west-2 in this case). You will typically create both public and private subnets.
+
+To do this, navigate to VPC > Subnets in the AWS Management Console and click Create Subnet.
+
+<img width="601" height="214" alt="SUBNET(1)" src="https://github.com/user-attachments/assets/d3e30af3-2ae2-4f9b-b3f5-25e26db5fcc7" />
+
+
+To create a subnet, you must first select the VPC you created earlier. After that, provide a subnet name and specify an IPv4 CIDR block. The size of the CIDR block determines how many IP addresses will be available within the subnet. For example, using a /24 CIDR block provides 251 usable IPv4 addresses.
