@@ -99,7 +99,7 @@ Note: The private server does not have a public IPv4 address assigned, which mea
 # Connecting via SSH steps
 To connect to your public host (Bastion Host), you will need to use the key pair you created earlier and establish a secure SSH connection from your local machine. This provides secure access to the Bastion Host, which will then allow you to connect to resources within the private subnet.
 
-## Connecting to the Bastion Host via PowerShell
+### Step 1 - Connecting to the Bastion Host via PowerShell
 
 1.	Open PowerShell on your local machine.
 2.	Navigate to the directory where your .pem key file is stored.
@@ -116,7 +116,7 @@ extra context:
 
 Once you have successfully connected to your instance, you will be presented with system details. For example, if you are using an Ubuntu server, you will see the default Ubuntu welcome message along with basic system information.
 
-## Step 2 – Copying the .pem File to the Server
+### Step 2 – Copying the .pem File to the Server
 
 There are multiple ways to transfer your key file to the Bastion Host. One option is to copy and paste the contents of the .pem file into a new file on the server. However, a more common method is to use SFTP (or similar tools to transfer the file directly).
 
@@ -130,7 +130,7 @@ After creating the file, open it using a text editor such as nano. Paste the con
 
 Alternatively, instead of manually copying or pasting the contents of the .pem file, you can use a tool such as FileZilla to securely transfer the file over port 22 (SFTP). FileZilla provides a graphical interface for file transfers, which can be easier for users unfamiliar with command-line tools. Detailed instructions are available in the official FileZilla documentation: Howto: FileZilla Project Wiki.
 
-## Alternative Method – Using FileZilla (SFTP)
+#### Alternative Method – Using FileZilla (SFTP)
  1.	Download and install FileZilla Client.
  2.	Open FileZilla and go to File > Site Manager.
  3.	Add a new connection with the following details:
@@ -142,7 +142,7 @@ Alternatively, instead of manually copying or pasting the contents of the .pem f
   o	Key file: Select your .pem file
  4.	Connect, and then simply drag and drop your .pem file from your local machine into the Bastion Host’s directory.
 
-# Step 3 – Connecting to the Private Instance via the Public Server
+### Step 3 – Connecting to the Private Instance via the Public Server
 
 After transferring the .pem file to your Bastion Host (public server), you must set the correct file permissions. Private key files require read-only permissions for security; otherwise, SSH will refuse to use them.
 
@@ -166,7 +166,7 @@ After running the SSH command, you are now logged into the private server. From 
 
 -	High availability: Deploy subnets across multiple Availability zones (AZs) for redundancy
   
--	Infrastructure as Code (IaC): Rebuild this environment using Terraform or AWS Cloud Formation for repeatability, error handling & version control
+-	Infrastructure as Code (IaC): Rebuild this environment using Terraform or AWS CloudFormation for repeatability, error handling & version control
   
 -	Monitoring & Logging: Integrate AWS CloudWatch and VPC Flow Logs for monitoring, alerting and auditing network activity.
 
