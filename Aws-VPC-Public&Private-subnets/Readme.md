@@ -13,3 +13,4 @@ can only be reached through the bastion host within the public subnet.
 Having a VPC within your infrastructure is important because it allows you to control network configurations, such as IP address ranges, subnets, and security settings
 
 To get started, go to the AWS Management Console and search for VPC. Once you are in the VPC service, navigate to Your VPCs > Create VPC. This will initiate the process of creating a VPC. 
+<img width="602" height="196" alt="AWS VPC - (1)" src="https://github.com/user-attachments/assets/c5f9d044-bae2-4162-9fb0-29af043ead52" />
