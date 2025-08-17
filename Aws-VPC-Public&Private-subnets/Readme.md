@@ -78,9 +78,9 @@ This instance will serve as your Bastion Host, enabling secure access to resourc
 
 <img width="597" height="278" alt="Bastion Host(1)" src="https://github.com/user-attachments/assets/07ffad86-d77f-406e-a981-223ce10acfb4" />
 
-Next, assign a Security Group to the instance and provide it with a descriptive name. Ensure that the security group allows SSH (port 22) access to the Bastion Host from your local machine (preferably restricted to your own IP address for security).
+Next, assign a Security Group to the instance and provide it with a descriptive name. Ensure that the security group allows SSH (port 22) access to the Bastion Host from your local machine (preferably restricted to your IP address for security).
 
-Once the security group is configured, you can proceed to launch the instance. At this point, your Bastion Host will be ready to use for secure access to your private subnet re-sources.
+Once the security group is configured, you can proceed to launch the instance. At this point, your Bastion Host will be ready to use for secure access to your private subnet resources.
 
 
 # Create a private instance
@@ -88,13 +88,88 @@ The private host should be created within the private subnet of your VPC. The pr
 
 In the Network Settings, assign the instance to your VPC and select the private subnet. Disable Auto-assign Public IP, since this instance will not require direct access to the public internet.
 
-Next, configure a new Security Group. You can give it any descriptive name. For in-bound rules, choose Custom TCP Rule (SSH, port 22) and set the Source to the IP range of the public subnet (e.g., 10.0.20.0/24). This ensures that only the Bastion Host (in the public subnet) can access the private instance via SSH. Add a short description such as “SSH access via Bastion.”
+Next, configure a new Security Group. You can give it any descriptive name. For inbound rules, choose Custom TCP Rule (SSH, port 22) and set the Source to the IP range of the public subnet (e.g., 10.0.20.0/24). This ensures that only the Bastion Host (in the public subnet) can access the private instance via SSH. Add a short description such as “SSH access via Bastion.”
 
 Once complete, launch the instance. The private host will now be securely deployed within the private subnet and accessible only through the Bastion Host.
 
 <img width="602" height="428" alt="Private(1)" src="https://github.com/user-attachments/assets/7048cb2f-96be-4773-b605-b681d8feb38a" />
  
 Note: The private server does not have a public IPv4 address assigned, which means it cannot be accessed directly from the internet. It can only be reached through the Basti-on Host in the public subnet.
+
+# Connecting via SSH steps
+To connect to your public host (Bastion Host), you will need to use the key pair you created earlier and establish a secure SSH connection from your local machine. This provides secure access to the Bastion Host, which will then allow you to connect to resources within the private subnet.
+
+## Connecting to the Bastion Host via PowerShell
+
+1.	Open PowerShell on your local machine.
+2.	Navigate to the directory where your .pem key file is stored.
+3.	Enter the following command:
+ssh -i .\Key_Name.pem username@Public-IP
+
+<img width="441" height="27" alt="Picture11" src="https://github.com/user-attachments/assets/00781167-9e36-4788-939e-4b75db18e0be" />
+
+
+extra context:
+-	Replace Key_Name.pem with the name of your key file.
+-	Replace username with the correct user for your AMI (e.g., ubuntu for Ubuntu, ec2-user for Amazon Linux).
+-	Replace Public-IP with the public IP address of your Bastion Host
+
+Once you have successfully connected to your instance, you will be presented with system details. For example, if you are using an Ubuntu server, you will see the default Ubuntu welcome message along with basic system information.
+
+## Step 2 – Copying the .pem File to the Server
+
+There are multiple ways to transfer your key file to the Bastion Host. One option is to copy and paste the contents of the .pem file into a new file on the server. However, a more common method is to use SFTP (or similar tools to transfer the file directly).
+
+<img width="602" height="385" alt="Picture12" src="https://github.com/user-attachments/assets/0555e43c-a283-48fc-9096-e1ec085ecf8d" />
+
+To create a new file inside your instance, you can use the touch command. This command creates an empty file if it does not already exist or updates the timestamp if the file is already present.
+
+<img width="602" height="73" alt="Picture13" src="https://github.com/user-attachments/assets/fd1a1ad0-736c-4766-95c4-156cf2b53df8" />
+
+After creating the file, open it using a text editor such as nano. Paste the contents of your .pem file into it and then save the changes. This ensures your private key is available inside the instance for SSH access to private servers.
+
+Alternatively, instead of manually copying or pasting the contents of the .pem file, you can use a tool such as FileZilla to securely transfer the file over port 22 (SFTP). FileZilla provides a graphical interface for file transfers, which can be easier for users unfamiliar with command-line tools. Detailed instructions are available in the official FileZilla documentation: Howto: FileZilla Project Wiki.
+
+## Alternative Method – Using FileZilla (SFTP)
+ 1.	Download and install FileZilla Client.
+ 2.	Open FileZilla and go to File > Site Manager.
+ 3.	Add a new connection with the following details:
+  o	Host: Public IP of your Bastion Host
+  o	Port: 22
+  o	Protocol: SFTP – SSH File Transfer Protocol
+  o	Logon Type: Key file authentication
+  o	User: ubuntu (for Ubuntu) or ec2-user (for Amazon Linux)
+  o	Key file: Select your .pem file
+ 4.	Connect, and then simply drag and drop your .pem file from your local machine into the Bastion Host’s directory.
+
+# Step 3 – Connecting to the Private Instance via the Public Server
+
+After transferring the .pem file to your Bastion Host (public server), you must set the correct file permissions. Private key files require read-only permissions for security; otherwise, SSH will refuse to use them.
+
+Run the following command to grant read-only access to the file:
+
+chmod 400 PrivateKey.pem
+
+This ensures that only the file owner can read the key, which is required for SSH authentication.
+
+<img width="602" height="236" alt="Picture14" src="https://github.com/user-attachments/assets/22bc617e-9519-4c3e-9f8c-3f50141c6e72" />
+
+Once the correct permissions have been applied to the .pem file, you can connect to the private server from the Bastion Host using the following SSH command:
+
+ssh -i PrivateKey.pem username@<Private-Server-IP>
+
+Replace PrivateKey.pem with your key file, username with the appropriate user (e.g., ubuntu for Ubuntu, ec2-user for Amazon Linux), and <Private-Server-IP> with the private instance’s IP address.
+ 
+After running the SSH command, you are now logged into the private server. From here, you have full access to manage the system, install software, configure services, and perform administrative tasks securely through the Bastion Host.
+
+# Future improvements
+
+-	High availability: Deploy subnets across multiple Availability zones (AZs) for redundancy
+  
+-	Infrastructure as Code (IaC): Rebuild this environment using Terraform or AWS Cloud Formation for repeatability, error handling & version control
+  
+-	Monitoring & Logging: Integrate AWS CloudWatch and VPC Flow Logs for monitoring, alerting and auditing network activity.
+
 
 
 
