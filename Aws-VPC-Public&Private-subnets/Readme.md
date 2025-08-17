@@ -8,6 +8,11 @@ The services that I have used are VPCs, Internet Gateway, Route Tables, EC2 Inst
 Public instances are accessible through the internet gateway (Internet), whilst the private instances, 
 can only be reached through the bastion host within the public subnet.
 
+The main purpose of this project is to build my knowledge in the cloud infrastructure architecture, security and networking while creating a real-world environment to showcase in my portfolio. Below is a diagram of the architecture of the system.
+
+<img width="1218" height="700" alt="AWS-Private Public-Subnets-Diagram" src="https://github.com/user-attachments/assets/74a04f22-f85f-41d6-813c-e69bb4c0e678" />
+
+
 # Create a Virtual Private Cloud
 
 Having a VPC within your infrastructure is important because it allows you to control network configurations, such as IP address ranges, subnets, and security settings
