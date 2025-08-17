@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 
 This AWS project demonstrates that I am currently practising building secure and scalable infrastructure within the cloud, 
 by setting up a Virtual Private Cloud (VPC) with both public and private subnets. 
