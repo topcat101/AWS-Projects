@@ -43,3 +43,25 @@ To do this, navigate to VPC > Subnets in the AWS Management Console and click Cr
 
 
 To create a subnet, you must first select the VPC you created earlier. After that, provide a subnet name and specify an IPv4 CIDR block. The size of the CIDR block determines how many IP addresses will be available within the subnet. For example, using a /24 CIDR block provides 251 usable IPv4 addresses.
+
+
+# Route tables
+A Route Table allows you to define rules that determine how network traffic is directed within your VPC. Each subnet in a VPC must be associated with a route table, which controls the flow of traffic both inside the VPC and to external networks such as the internet.
+
+To create a route table, navigate to VPC > Route Tables in the AWS Management Console and click Create Route Table. Provide details such as the name and the VPC to which it should be associated. Typically, you will create two route tables:
+
+•	A Public Route Table, associated with the public subnet and configured to allow internet access via the Internet Gateway.
+
+•	A Private Route Table, associated with the private subnet and configured for internal traffic only (or optionally routed through a NAT Gateway for internet access).
+
+
+ <img width="602" height="213" alt="RouteTable(1)" src="https://github.com/user-attachments/assets/32daa007-e6e9-41d3-bfb1-9f3c808aea4f" />
+
+
+Once both the public and private route tables have been created, the next step is to edit the routes. Start with the public route table. By default, a local route is already present, which enables communication within the VPC. Keep this route in place and then add a new route that enables internet access.
+
+Set the destination to 0.0.0.0/0 and the target to the Internet Gateway. The destination 0.0.0.0/0 represents all IPv4 addresses, meaning any traffic can access your VPC’s CIDR block will be directed through the Internet Gateway. This allows instances in the public subnet to access the internet.
+
+<img width="602" height="365" alt="RouteTable(2)" src="https://github.com/user-attachments/assets/4f556653-ff98-455e-86d5-e0fc5cce00ee" />
+
+For the private route table, you only need to associate it with the private subnet. This ensures that the private subnet follows the rules defined in the private route table. By default, it will only have a local route, meaning traffic is restricted to communication within the VPC.
