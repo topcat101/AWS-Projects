@@ -69,7 +69,7 @@ Set the destination to 0.0.0.0/0 and the target to the Internet Gateway. The des
 
 <img width="602" height="365" alt="RouteTable(2)" src="https://github.com/user-attachments/assets/4f556653-ff98-455e-86d5-e0fc5cce00ee" />
 
-For the private route table, you only need to associate it with the private subnet. This ensures that the private subnet follows the rules defined in the private route table. By default, it will only have a local route, meaning traffic is restricted to communication within the VPC.
+For the private route table, you only need to associate it with the private subnet. This ensures that the private subnet follows the rules defined in the private route table. By default, it will only have a local route, meaning traffic is restricted to communication within the private subnet.
 
 # Create a Bastion Host
 A Bastion Host, also known as a Jump Server, acts as a secure gateway to access resources in the private subnet from the public subnet. Instead of exposing private instances directly to the internet, you connect to the Bastion Host (which resides in the public subnet) and then use it to securely access instances within the private subnet.
