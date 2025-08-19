@@ -139,13 +139,13 @@ Alternatively, instead of manually copying or pasting the contents of the .pem f
  1.	Download and install FileZilla Client.
  2.	Open FileZilla and go to File > Site Manager.
  3.	Add a new connection with the following details:
-  o	Host: Public IP of your Bastion Host
-  o	Port: 22
-  o	Protocol: SFTP – SSH File Transfer Protocol
-  o	Logon Type: Key file authentication
-  o	User: ubuntu (for Ubuntu) or ec2-user (for Amazon Linux)
-  o	Key file: Select your .pem file
- 4.	Connect, and then simply drag and drop your .pem file from your local machine into the Bastion Host’s directory.
+    - Host: Public IP of your Bastion Host
+    - Port: 22
+    - Protocol: SFTP – SSH File Transfer Protocol
+    -	Logon Type: Key file authentication
+    -	User: ubuntu (for Ubuntu) or ec2-user (for Amazon Linux)
+    -	Key file: Select your .pem file
+ 5.	Connect, and then simply drag and drop your .pem file from your local machine into the Bastion Host’s directory.
 
 ### Step 3 – Connecting to the Private Instance via the Public Server
 
