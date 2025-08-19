@@ -6,10 +6,6 @@ terraform {
   }
 }
 
-
-#
-# Will be rewriting the whole tf, as it needs to be neater and add other security stuff
-#
 provider "aws" {
   # Configuration options
   region     = "eu-west-2"
