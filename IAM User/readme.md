@@ -33,12 +33,19 @@ To create a policy, navigate to: IAM > Policies > Create Policy.
 Within the Create Policy section, you can choose either the JSON editor or the Visual editor. 
 In this example, we’ll use JSON because of its readability and structured formatting.
 When using the JSON editor, you will encounter the following key elements in the policy:
+
 •	Version – Defines the version of the policy language.
+
 •	Statement – Contains the main policy details.
+
 •	Sid – Serves as an optional identifier or description.
+
 •	Effect – Determines whether the statement allows or denies access to resources.
+
 •	Action – Specifies the action(s) allowed or denied for services.
+
 •	Resource – Defines the object(s) to which the statement applies.
+
 Note: 
 -	IAM JSON Policy Elements Reference https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html
 -	Creating IAM Policies
