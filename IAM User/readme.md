@@ -66,6 +66,8 @@ You should select Attach policies directly, which allows you to add the policy y
  
 ### Sign in
 Once you have completed the above sections, sign in to the AWS Management Console. It is recommended to open a new browser tab or use an incognito/private browsing window. On the AWS sign-in page, enter the user credentials along with the 12-digit AWS account ID.
-Enabling cloud trail for user activity
 
-Next steps/ Future improvements
+
+### Enabling CloudTrail for user activity
+
+### Next steps/ Future improvements
