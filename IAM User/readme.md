@@ -77,4 +77,28 @@ Once you have completed the above sections, sign in to the AWS Management Consol
 
 ### Enabling CloudTrail for user activity
 
+Enabling CloudTrail for monitoring user activity
+To begin, you need to create a trail in AWS CloudTrail. Navigate to the CloudTrail service and select Create trail.
+
+You will then be prompted to provide details such as:
+
+•	Trail name – The identifier for your trail.
+
+•	S3 bucket and folder – The storage location where the CloudTrail logs will be delivered.
+
+Notes: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail.html
+
+<img width="602" height="250" alt="cloudtrail(1)" src="https://github.com/user-attachments/assets/3519bb74-3a8c-4604-9650-637cc30924c8" />
+
+Once you have created the trail, you will be presented with a detailed dashboard containing the following key sections: Event history, Trails, Query results history, and CloudTrail Insights. For now, proceed directly to Event history by selecting View full event history.
+
+<img width="602" height="259" alt="cloudtrail(2)" src="https://github.com/user-attachments/assets/49e25875-5199-4b30-96c9-a663da3f9432" />
+
+  
+This will present the logs of user activity within the selected region from the past 90 days. These logs allow you to review actions that have been taken, such as the deletion of an S3 bucket or the creation of a new S3 bucket.
+
+### Configuring CloudWatch
+
+
+
 ### Next steps/ Future improvements
