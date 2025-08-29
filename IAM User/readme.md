@@ -97,7 +97,27 @@ Once you have created the trail, you will be presented with a detailed dashboard
   
 This will present the logs of user activity within the selected region from the past 90 days. These logs allow you to review actions that have been taken, such as the deletion of an S3 bucket or the creation of a new S3 bucket.
 
-### Configuring CloudWatch
+### Enabling & Integrating CloudWatch with CloudTrail
+
+Go to the trails you have created in CloudTrail and open the service. Once there, navigate to CloudWatch Logs. Enable CloudWatch Logs and create a new log group with a new IAM role.
+
+<img width="602" height="50" alt="Picture1" src="https://github.com/user-attachments/assets/84c42a4d-3d8d-4285-b93b-5a0edbc1069a" />
+
+To find the new CloudWatch logs you created, follow this path: CloudWatch > Log Groups > [Log Group Name].
+
+<img width="602" height="201" alt="Picture2" src="https://github.com/user-attachments/assets/f81ea686-1888-4858-9165-cb59911b3462" />
+
+Once inside your logs, you will see log stream files. Select the latest file to view it. The log is displayed in JSON format and contains detailed information about the user’s recent actions. However, it typically takes approximately five minutes after an API call for the logs to appear in CloudWatch, so keep this delay in mind.
+
+<img width="602" height="74" alt="Picture3" src="https://github.com/user-attachments/assets/6b42cc88-b41a-487b-80a6-326df1549cc8" />
+
+Clicking into the logs will display more detailed information, which can help identify issues that have occurred or highlight potential problems in certain situations.
+
+If you would like to query the data, you can move to Logs Insights, which provides various techniques for querying log data. In this case, I chose to use OpenSearch SQL and the built-in query generator to create a query that filters by a specific username and S3 bucket. Once the query is executed, it retrieves and displays all matching log entries, including the details you requested.
+
+<img width="602" height="190" alt="Picture4" src="https://github.com/user-attachments/assets/38c82c3d-df0e-4976-87a1-fa24697c1171" />
+
+### Setting up Metrics & Alerts, Tracking IAM users' activity.
 
 
 
