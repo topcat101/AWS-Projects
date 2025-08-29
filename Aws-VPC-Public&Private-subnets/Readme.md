@@ -171,9 +171,11 @@ After running the SSH command, you are now logged into the private server. From 
 
 -	High availability: Deploy subnets across multiple Availability zones (AZs) for redundancy
   
--	Infrastructure as Code (IaC): Rebuild this environment using Terraform or AWS CloudFormation for repeatability, error handling & version control
+-	AWS CloudFormation for repeatability, error handling & version control
   
 -	Monitoring & Logging: Integrate AWS CloudWatch and VPC Flow Logs for monitoring, alerting and auditing network activity.
+
+- Using a NAT for private server to do update	
 
 
 
