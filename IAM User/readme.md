@@ -125,6 +125,8 @@ If you would like to query the data, you can move to Logs Insights, which provid
 ### Setting Up Metrics & Alerts: Tracking IAM User Activity
 
 First, you need to set up a metric filter in CloudWatch. Navigate to: CloudWatch > Log groups. Select the log group you want to monitor by checking its box, then choose Actions > Create metric filter.
+
+<img width="602" height="68" alt="Picture1" src="https://github.com/user-attachments/assets/1309f7fc-34dc-4307-bcc7-79be8c4dc27d" />
  
 Now you can define the details for your metric by creating a filter pattern.
 
@@ -149,9 +151,15 @@ After entering the filter pattern, select Next to assign the metric:
 4.	Metric value – Set the value to 1 (this indicates each matching event is counted).
 
 Once complete, select Next to review the configuration.
+
+<img width="602" height="281" alt="Picture3" src="https://github.com/user-attachments/assets/6f262a53-19eb-4358-95f9-898d2b60b3fc" />
+
  
 At the Review and create step, verify that all the required details for the metric filter are correct. If changes are needed, select Edit; otherwise, choose Create metric filter.
+
 To access the metric filters you have created, go to the CloudWatch log group where the filter was defined. Within the log group, select the Metric filters tab to view your filters.
+
+<img width="602" height="208" alt="Picture4" src="https://github.com/user-attachments/assets/923ba281-8a9b-4bbd-a13b-dc41c1307061" />
  
 You are now provided with the containers of your metric data. To view your metrics, select Query metrics from the right-hand side.
 Within the metrics tabs, go to Custom namespaces and select the namespace you created (for example, Create&DeleteBucket). Then check the box for the corresponding metric name. This will display the data showing when specific events have occurred.
@@ -159,9 +167,15 @@ Within the metrics tabs, go to Custom namespaces and select the namespace you cr
 It is recommended to adjust the time zone to your local setting and set the view to a 3-hour window for clearer visibility of recent activity.
  
 To begin setting up alarms, return to the log group in CloudWatch where you created the metric filter, and open the Metric filters tab.
- 
+
+<img width="480" height="771" alt="Picture5" src="https://github.com/user-attachments/assets/8ca1cb0b-b877-4348-8258-09b44c5e7de5" />
+
 Once you are in the Metric filters area, select the namespace you want to create an alarm for, then choose Create alarm.
- 
+
+#### Create alarm
+
+<img width="464" height="343" alt="Picture7" src="https://github.com/user-attachments/assets/f6c39238-13a3-4394-b589-6d7a3a9c2682" />
+
 In the Create alarm section, configure the alarm details:
 
  •	Metric name – Select the metric you defined earlier.
@@ -174,8 +188,8 @@ In the Create alarm section, configure the alarm details:
 
  •	Condition – Set to Greater/Equal than 1, meaning the alarm will trigger if the event occurs at least once in the defined period.
 
-Statistics Reference: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html 
- 
+Statistics Reference: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html
+
 #### Configure Actions
 
 When configuring the actions for your alarm:
@@ -194,6 +208,7 @@ When configuring the actions for your alarm:
 
 ⚠️ Note: It is not recommended to use Gmail addresses for SNS notifications. 
 
+<img width="602" height="191" alt="Picture8" src="https://github.com/user-attachments/assets/ea1abed2-2151-411f-b6c6-2ff64a98c87f" />
 
 #### Alarm Details and Testing
 
