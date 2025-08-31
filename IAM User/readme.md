@@ -134,7 +134,7 @@ Now you can define the details for your metric by creating a filter pattern.
 
 -	S3 bucket creation or deletion by an IAM user
 
-{ ($.eventName = CreateBucket) || ($.eventName = DeleteBucket) }
+{ (`$.eventName = CreateBucket`) || (`$.eventName = DeleteBucket`) }
 
 #### Assigning the Metric
 
