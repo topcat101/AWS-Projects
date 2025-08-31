@@ -130,11 +130,11 @@ Now you can define the details for your metric by creating a filter pattern.
 
 -	Failed sign-in attempts to the Management Console
 
-{($.eventName = ConsoleLogin) `&&`  ($.responseElements.ConsoleLogin = "Failure")}
+{ ($.eventName = ConsoleLogin) `&&`  ($.responseElements.ConsoleLogin = "Failure") }
 
 -	S3 bucket creation or deletion by an IAM user
 
-{($.eventName = CreateBucket) || ($.eventName = DeleteBucket)}
+{ ($.eventName = CreateBucket) || ($.eventName = DeleteBucket) }
 
 #### Assigning the Metric
 
