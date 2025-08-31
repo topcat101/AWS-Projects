@@ -117,12 +117,103 @@ Once inside your logs, you will see log stream files. Select the latest file to 
 
 Clicking into the logs will display more detailed information, which can help identify issues that have occurred or highlight potential problems in certain situations.
 
-If you would like to query the data, you can move to Logs Insights, which provides various techniques for querying log data. In this case, I chose to use OpenSearch SQL and the built-in query generator to create a query that filters by a specific username and S3 bucket. Once the query is executed, it retrieves and displays all matching log entries, including the details you requested.
 
 <img width="602" height="190" alt="Picture4" src="https://github.com/user-attachments/assets/38c82c3d-df0e-4976-87a1-fa24697c1171" />
 
-### Setting up Metrics & Alerts, Tracking IAM users' activity.
+If you would like to query the data, you can move to Logs Insights, which provides various techniques for querying log data. In this case, I chose to use OpenSearch SQL and the built-in query generator to create a query that filters by a specific username and S3 bucket. Once the query is executed, it retrieves and displays all matching log entries, including the details you requested.
+
+### Setting Up Metrics & Alerts: Tracking IAM User Activity
+
+First, you need to set up a metric filter in CloudWatch. Navigate to: CloudWatch > Log groups. Select the log group you want to monitor by checking its box, then choose Actions > Create metric filter.
+ 
+Now you can define the details for your metric by creating a filter pattern.
+
+-	Failed sign-in attempts to the Management Console
+ o	{ ($.eventName = ConsoleLogin) && ($.responseElements.ConsoleLogin = "Failure") }
+
+-	S3 bucket creation or deletion by an IAM user
+ o	{($.eventName = CreateBucket) || ($.eventName = DeleteBucket)}
+
+Assigning the Metric
+After entering the filter pattern, select Next to assign the metric:
+
+1.	Filter name – Provide a name that clearly describes the filter.
+
+2.	Namespace – A container for CloudWatch metrics, used to isolate metrics from different sources. You can assign any meaningful name here.
+
+3.	Metric name – Provide a descriptive name for the metric.
+
+4.	Metric value – Set the value to 1 (this indicates each matching event is counted).
+
+Once complete, select Next to review the configuration.
+ 
+At the Review and create step, verify that all the required details for the metric filter are correct. If changes are needed, select Edit; otherwise, choose Create metric filter.
+To access the metric filters you have created, go to the CloudWatch log group where the filter was defined. Within the log group, select the Metric filters tab to view your filters.
+ 
+You are now provided with the containers of your metric data. To view your metrics, select Query metrics from the right-hand side.
+Within the metrics tabs, go to Custom namespaces and select the namespace you created (for example, Create&DeleteBucket). Then check the box for the corresponding metric name. This will display the data showing when specific events have occurred.
+
+It is recommended to adjust the time zone to your local setting and set the view to a 3-hour window for clearer visibility of recent activity.
+ 
+To begin setting up alarms, return to the log group in CloudWatch where you created the metric filter, and open the Metric filters tab.
+ 
+Once you are in the Metric filters area, select the namespace you want to create an alarm for, then choose Create alarm.
+ 
+In the Create alarm section, configure the alarm details:
+
+•	Metric name – Select the metric you defined earlier.
+
+•	Statistic – Leave as Sum (default).
+
+•	Period – For example, set to 30 seconds to evaluate how many times the event occurs within that time frame.
+
+•	Threshold type – Leave as Static.
+
+•	Condition – Set to Greater/Equal than 1, meaning the alarm will trigger if the event occurs at least once in the defined period.
+
+Statistics Reference: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html 
+ 
+#### Configure Actions
+
+When configuring the actions for your alarm:
+
+•	Alarm state trigger – Leave this set to In Alarm.
+
+•	Send notification to SNS topic – Select Create new topic and give it a meaningful name relevant to the alarm.
+
+•	Notification endpoint – Enter the email address you want to use for receiving alerts.
+
+•	Create topic – After creating the topic, confirm the subscription by clicking the link sent to your email inbox (check your Junk/Spam folder if you don’t see it).
+
+•	Once confirmed, return to the configuration and select Next.
+
+•	Verify the SNS topic for any additional details or troubleshooting if issues occur.
+
+⚠️ Note: It is not recommended to use Gmail addresses for SNS notifications. 
+
+
+#### Alarm Details and Testing
+
+In the Alarm details section, provide the relevant information such as a name and description for the alarm. Once complete, select Next and then Create alarm.
+To test the alarm, create a new S3 bucket (or perform the event you configured the filter for). Allow a few minutes for processing, and a notification should be sent to the email address you specified.
+
+#### ⚠️ Troubleshooting:
+
+•	If no email arrives, confirm that you subscribed to the SNS topic (check your inbox and spam/junk folders).
+
+•	Verify the filter pattern is correct and matches the test event.
+
+•	Ensure the alarm threshold (e.g., ≥ 1) is appropriate for the test event.
+
+•	Check CloudWatch > Alarms to confirm the alarm state changed to In Alarm.
 
 
 
 ### Next steps/ Future improvements
+-	Refining IAM Policies
+-	Integrating IAM with AWS Organizations
+-	Adding IAM Identity Centre (AWS SSO)
+-	IAM Access Analyzer
+-	Applying IAM Best Practices
+-	Setting Up Reports
+
