@@ -157,6 +157,9 @@ Once complete, select Next to review the configuration.
 At the Review and create step, verify that all the required details for the metric filter are correct. If changes are needed, select Edit; otherwise, choose Create metric filter.
 
 To access the metric filters you have created, go to the CloudWatch log group where the filter was defined. Within the log group, select the Metric filters tab to view your filters.
+
+<img width="602" height="281" alt="Picture3" src="https://github.com/user-attachments/assets/c2d16c3e-7954-4419-a384-4fe395e33619" />
+
  
 You are now provided with the containers of your metric data. To view your metrics, select Query metrics from the right-hand side.
 Within the metrics tabs, go to Custom namespaces and select the namespace you created (for example, Create&DeleteBucket). Then check the box for the corresponding metric name. This will display the data showing when specific events have occurred.
