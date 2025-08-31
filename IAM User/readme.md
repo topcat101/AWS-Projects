@@ -1,6 +1,10 @@
-### Introduction
+### Overview
+The baseline of this project is to create an IAM user, assign a custom policy, and monitor their activity within AWS. This involves setting up CloudTrail to capture events, integrating it with CloudWatch Logs, and creating metrics and alarms to track IAM user actions such as failed logins or S3 bucket changes.
 
-Work in progress!
+The overall goal of this mini project is not only to avoid giving users unnecessary levels of access, but also to track the actions they perform within the environment for better security and visibility.
+
+<img width="1157" height="434" alt="Sending notification via AWS SNS" src="https://github.com/user-attachments/assets/a7b643a5-3ca1-44e7-8053-4f5ae5d5093d" />
+
 
 ### Creating a user
 
