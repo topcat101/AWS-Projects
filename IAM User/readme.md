@@ -129,9 +129,11 @@ First, you need to set up a metric filter in CloudWatch. Navigate to: CloudWatch
 Now you can define the details for your metric by creating a filter pattern.
 
 -	Failed sign-in attempts to the Management Console
+
  o	{ ($.eventName = ConsoleLogin) && ($.responseElements.ConsoleLogin = "Failure") }
 
 -	S3 bucket creation or deletion by an IAM user
+
  o	{($.eventName = CreateBucket) || ($.eventName = DeleteBucket)}
 
 Assigning the Metric
