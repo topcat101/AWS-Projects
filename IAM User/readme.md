@@ -158,13 +158,13 @@ Once complete, select Next to review the configuration.
 At the Review and create step, verify that all the required details for the metric filter are correct. If changes are needed, select Edit; otherwise, choose Create metric filter.
 
 To access the metric filters you have created, go to the CloudWatch log group where the filter was defined. Within the log group, select the Metric filters tab to view your filters.
-
-<img width="602" height="208" alt="Picture4" src="https://github.com/user-attachments/assets/923ba281-8a9b-4bbd-a13b-dc41c1307061" />
  
 You are now provided with the containers of your metric data. To view your metrics, select Query metrics from the right-hand side.
 Within the metrics tabs, go to Custom namespaces and select the namespace you created (for example, Create&DeleteBucket). Then check the box for the corresponding metric name. This will display the data showing when specific events have occurred.
 
 It is recommended to adjust the time zone to your local setting and set the view to a 3-hour window for clearer visibility of recent activity.
+
+<img width="602" height="208" alt="Picture4" src="https://github.com/user-attachments/assets/742ab56f-460c-4725-8a6b-ced05f215288" />
  
 To begin setting up alarms, return to the log group in CloudWatch where you created the metric filter, and open the Metric filters tab.
 
