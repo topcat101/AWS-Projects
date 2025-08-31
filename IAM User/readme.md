@@ -130,13 +130,14 @@ Now you can define the details for your metric by creating a filter pattern.
 
 -	Failed sign-in attempts to the Management Console
 
-  o	{ ($.eventName = ConsoleLogin) `&&`  ($.responseElements.ConsoleLogin = "Failure") }
+ -	{ ($.eventName = ConsoleLogin) `&&`  ($.responseElements.ConsoleLogin = "Failure") }
 
 -	S3 bucket creation or deletion by an IAM user
+ 
+ -	{($.eventName = CreateBucket) || ($.eventName = DeleteBucket)}
 
- o 	{($.eventName = CreateBucket) || ($.eventName = DeleteBucket)}
+#### Assigning the Metric
 
-Assigning the Metric
 After entering the filter pattern, select Next to assign the metric:
 
 1.	Filter name – Provide a name that clearly describes the filter.
@@ -163,15 +164,15 @@ Once you are in the Metric filters area, select the namespace you want to create
  
 In the Create alarm section, configure the alarm details:
 
-•	Metric name – Select the metric you defined earlier.
+ •	Metric name – Select the metric you defined earlier.
 
-•	Statistic – Leave as Sum (default).
+ •	Statistic – Leave as Sum (default).
 
-•	Period – For example, set to 30 seconds to evaluate how many times the event occurs within that time frame.
+ •	Period – For example, set to 30 seconds to evaluate how many times the event occurs within that time frame.
 
-•	Threshold type – Leave as Static.
+ •	Threshold type – Leave as Static.
 
-•	Condition – Set to Greater/Equal than 1, meaning the alarm will trigger if the event occurs at least once in the defined period.
+ •	Condition – Set to Greater/Equal than 1, meaning the alarm will trigger if the event occurs at least once in the defined period.
 
 Statistics Reference: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html 
  
