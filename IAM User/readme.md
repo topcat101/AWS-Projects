@@ -152,8 +152,7 @@ After entering the filter pattern, select Next to assign the metric:
 
 Once complete, select Next to review the configuration.
 
-<img width="602" height="281" alt="Picture3" src="https://github.com/user-attachments/assets/6f262a53-19eb-4358-95f9-898d2b60b3fc" />
-
+<img width="602" height="233" alt="Picture2" src="https://github.com/user-attachments/assets/013d5ae7-e46e-4ff5-98e6-25ccafa7c14e" />
  
 At the Review and create step, verify that all the required details for the metric filter are correct. If changes are needed, select Edit; otherwise, choose Create metric filter.
 
