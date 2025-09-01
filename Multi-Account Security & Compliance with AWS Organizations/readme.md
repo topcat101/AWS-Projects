@@ -6,4 +6,10 @@
 
 ### IAM Access Analyser
 
-### Reports
+### Security & Compliance Reporting
+
+### Automation & Alerts
+
+### GuardDuty & Security Hub Integration
+
+### Documentation & Governance
