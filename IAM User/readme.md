@@ -233,7 +233,5 @@ To test the alarm, create a new S3 bucket (or perform the event you configured t
 -	Refining IAM Policies
 -	Integrating IAM with AWS Organizations
 -	Adding IAM Identity Centre (AWS SSO)
--	IAM Access Analyzer
 -	Applying IAM Best Practices
--	Setting Up Reports
 
