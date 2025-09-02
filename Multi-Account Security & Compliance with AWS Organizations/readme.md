@@ -27,6 +27,8 @@ Once the OU is created, you can use the Actions menu again to move your account 
 
 <img width="443" height="328" alt="Organizations Diagram" src="https://github.com/user-attachments/assets/9af07970-724d-4467-ac12-25e7b0ce506e" />
 
+Due to the limitations of this setup, I moved my management account into the MainApp OU. However, this is not a recommended practice. The management account should remain within the root folder to ensure proper governance, security, and account management across the organization.
+
 #### Applying Service Control Policies (SCP)
 -	Applying Service Control policies at OU level
 
