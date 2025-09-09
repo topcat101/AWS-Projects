@@ -30,6 +30,9 @@ Once the OU is created, you can use the Actions menu again to move your account 
 Due to the limitations of this setup, I moved my management account into the MainApp OU. However, this is not a recommended practice. The management account should remain within the root folder to ensure proper governance, security, and account management across the organization.
 
 #### Applying Service Control Policies (SCP)
+
+Service Control Policies (SCPs) allow your organization to enforce controlled measures within a hierarchy using Organizational Units (OUs). For example, if you apply a policy at the root level that restricts access to only the London and Ireland regions, then all ac-counts under that organization will only be able to access those regions. This provides greater control over what IAM users can and cannot access, thereby enhancing overall security.
+
 -	Applying Service Control policies at OU level
 
  	o	Deny Disabling CloudTrail or Config
@@ -37,8 +40,6 @@ Due to the limitations of this setup, I moved my management account into the Mai
  	o	Deny creation of IAM users (Force use of identity Center)
 
  	o	Restrict regions (e.g., only allow EU-WEST-2 or us-east-1)
-
- 	o	Deny S3 buckets with encryption enabled
 
  	o	Deny EC2 instance type not on the approved list (Cost/ security control)
 
