@@ -71,7 +71,20 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 ### IAM Identity Center
 
+- Create a user
+- Provided permissions sets
+- Testing if the SCP are working accordingly
+- Then I can go into ABAC (Attribute-Based Access Control) with tags for dynamic permissions
+- Assign permission sets at OU level, so new accounts inherit access automatically
+
 ### AWS Config
+
+- Enable organization-wide Config rules to track compliance.
+- Ensure all S3 buckets have encryption, all IAM users have MFA enabled, and CloudTrail is enabled in every account.
+- Ensure every user has MFA enabled.
+- Deploy Conformance packs (CIS AWS foundations, PCI-DSS)
+- Write Custom Config rules with lambda (EC2 instance must have specific tags)
+- Demonstrate auto remediation (IF encryption is disabled -> re-enable automatically) 
 
 ### IAM Access Analyser
 
