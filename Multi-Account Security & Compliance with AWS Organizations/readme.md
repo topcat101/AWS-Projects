@@ -41,11 +41,11 @@ Service Control Policies (SCPs) allow your organization to enforce controlled me
 
 <img width="602" height="378" alt="Picture1" src="https://github.com/user-attachments/assets/a9c71213-9862-4b21-b053-434cb0f6f94a" />
 
-##### Deny creation of IAM users (Force use of identity Center)
+##### Deny creation of IAM users
 
 <img width="602" height="329" alt="Picture2" src="https://github.com/user-attachments/assets/516bc327-0c10-4add-9ba1-108722b47295" />
 
-##### Restrict regions (e.g., only allow EU-WEST-2 or us-east-1)
+##### Restrict regions (only allow EU-WEST-2 or EU-WEST-1)
 
 <img width="602" height="478" alt="Picture3" src="https://github.com/user-attachments/assets/f6bd827c-4e22-44fb-bb8d-812e9fd28926" />
 
