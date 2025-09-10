@@ -73,6 +73,7 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 - Create a user
 - Provided permissions sets
+- Showcase how a single user can switch roles between accounts without separate IAM credentials.
 - Testing if the SCP are working accordingly
 - Then I can go into ABAC (Attribute-Based Access Control) with tags for dynamic permissions
 - Assign permission sets at OU level, so new accounts inherit access automatically
