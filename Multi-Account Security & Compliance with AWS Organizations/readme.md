@@ -33,17 +33,25 @@ Due to the limitations of this setup, I moved my management account into the Mai
 
 Service Control Policies (SCPs) allow your organization to enforce controlled measures within a hierarchy using Organizational Units (OUs). For example, if you apply a policy at the root level that restricts access to only the London and Ireland regions, then all ac-counts under that organization will only be able to access those regions. This provides greater control over what IAM users can and cannot access, thereby enhancing overall security.
 
--	Applying Service Control policies at OU level
 
- 	o	Deny Disabling CloudTrail or Config
+- Explain how SCP are created (Process)
+-	Demonstrate inheritance of SCPs across accounts (Diagram)
 
- 	o	Deny creation of IAM users (Force use of identity Center)
+##### Deny Disabling CloudTrail or Config
 
- 	o	Restrict regions (e.g., only allow EU-WEST-2 or us-east-1)
+<img width="602" height="378" alt="Picture1" src="https://github.com/user-attachments/assets/a9c71213-9862-4b21-b053-434cb0f6f94a" />
 
- 	o	Deny EC2 instance type not on the approved list (Cost/ security control)
+##### Deny creation of IAM users (Force use of identity Center)
 
--	Demonstrate inheritance of SCPs across accounts
+<img width="602" height="329" alt="Picture2" src="https://github.com/user-attachments/assets/516bc327-0c10-4add-9ba1-108722b47295" />
+
+##### Restrict regions (e.g., only allow EU-WEST-2 or us-east-1)
+
+<img width="602" height="478" alt="Picture3" src="https://github.com/user-attachments/assets/f6bd827c-4e22-44fb-bb8d-812e9fd28926" />
+
+##### Deny EC2 instance type not on the approved list (security control)
+
+<img width="602" height="531" alt="Picture4" src="https://github.com/user-attachments/assets/578d352a-0e2e-47e9-9e67-fd9877e0544f" />
 
 
 
