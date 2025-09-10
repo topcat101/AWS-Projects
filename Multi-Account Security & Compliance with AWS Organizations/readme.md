@@ -33,8 +33,22 @@ Due to the limitations of this setup, I moved my management account into the Mai
 
 Service Control Policies (SCPs) allow your organization to enforce controlled measures within a hierarchy using Organizational Units (OUs). For example, if you apply a policy at the root level that restricts access to only the London and Ireland regions, then all ac-counts under that organization will only be able to access those regions. This provides greater control over what IAM users can and cannot access, thereby enhancing overall security.
 
+To create an SCP, navigate to Organizations > Policies > Service Control Policies, and then click Create policy.
 
-- Explain how SCP are created (Process)
+https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_syntax.html
+
+The way I’ve implemented inheritance of the SCPs across the accounts is by assigning policies to Organizational Units (OUs). This allows access to be controlled as it flows down the hierarchy. For example, I have:
+
+-	Denied the ability to disable CloudTrail and Config, ensuring that no one can turn these off in the DEV OU.
+  
+-	Restricted regions at the Root OU level.
+  
+-	Denied the creation of IAM users in the Sandbox OU.
+  
+-	Denied certain EC2 instance types in the Production OU.
+  
+To assign a policy, select the SCP you created and then choose the target OU you want to apply it to.
+
 -	Demonstrate inheritance of SCPs across accounts (Diagram)
 
 ##### Deny Disabling CloudTrail or Config
