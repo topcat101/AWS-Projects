@@ -67,6 +67,60 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 <img width="602" height="531" alt="Picture4" src="https://github.com/user-attachments/assets/578d352a-0e2e-47e9-9e67-fd9877e0544f" />
 
+### AWS Config
+#### What is AWS Config
+
+AWS Config provides records of the configuration of your resources within your environment. This enables tracking of changes over time, allowing you to see who changed what and when within your accounts. Config also validates compliance against rules that you define, for example, ensuring that all S3 buckets have encryption enabled. If a bucket does not meet this requirement, AWS Config can invoke a Lambda function to check the encryption configuration and, if it is missing or incorrect, automatically apply the required encryption (such as AES-256). Nevertheless, Config allows for an audit trail for the governance, compliance and security requirements.
+
+#### Manual setup of Config
+https://docs.aws.amazon.com/config/latest/developerguide/manual-setup.title.html
+-	Document the process I have taken
+-	Share how you can change the settings to record what data. (AWS Config > Settings > Recorder)
+-	Talk about the settings what you can change for the frequency Daily or Continuous.
+
+#### Config dashboard
+-	Talk about the regions
+
+	
+#### Setting up rules
+
+-	Different rules sets (IAM-user-MFA-enabled & S3-Bucket-versioning enabled)
+-	Talk about remediation actions
+-	Compliant or Nocompliant
+-	Re-evaluating
+-	Talk about what I have done so far to remediate these actions, show examples to the viewer so we can assist them with this cruise.
+-	
+-	Talk how I have enabled MFA based on bucket deletions for S3-Bucket-versioning enabled, what administrative privileges I have had to give to a user.
+-	Enable aws access keys for root user.
+
+#### Deploying a Conformance packs
+-	Operational Best practices for aws identity and access management.
+-	Templates & Parameters
+-	Discuss the complaint score
+-	Talk about Parameters
+-	Taslk about the rules that have been set
+
+
+
+
+#### Writing a custom config rule with Lambda (EC2 instances must have a specific tags)
+
+#### Demonstrating auto-remediation (if encryption is disabled -> re-enable automatically)
+
+#### Show how Config aggregates compliance across all accounts in the Organization.
+#### Deploying to multi accounts within organizations
+
+https://aws.amazon.com/blogs/mt/moving-from-a-single-account-aws-config-deployment-to-an-organization-wide-deployment/#:~:text=In%20order%20to%20use%20AWS,Solution%20overview
+https://docs.aws.amazon.com/config/latest/developerguide/cpack-prerequisites.html
+https://aws.amazon.com/blogs/devops/how-to-centrally-manage-aws-config-rules-across-multiple-aws-accounts/
+
+#### Notes
+- Enable organization-wide Config rules to track compliance.
+- Ensure all S3 buckets have encryption, all IAM users have MFA enabled, and CloudTrail is enabled in every account.
+- Ensure every user has MFA enabled.
+- Deploy Conformance packs ()
+- Write Custom Config rules with lambda (EC2 instance must have specific tags)
+- Demonstrate auto remediation (IF encryption is disabled -> re-enable automatically) 
 
 
 ### IAM Identity Center
@@ -78,14 +132,7 @@ To assign a policy, select the SCP you created and then choose the target OU you
 - Then I can go into ABAC (Attribute-Based Access Control) with tags for dynamic permissions
 - Assign permission sets at OU level, so new accounts inherit access automatically
 
-### AWS Config
 
-- Enable organization-wide Config rules to track compliance.
-- Ensure all S3 buckets have encryption, all IAM users have MFA enabled, and CloudTrail is enabled in every account.
-- Ensure every user has MFA enabled.
-- Deploy Conformance packs (CIS AWS foundations, PCI-DSS)
-- Write Custom Config rules with lambda (EC2 instance must have specific tags)
-- Demonstrate auto remediation (IF encryption is disabled -> re-enable automatically) 
 
 ### IAM Access Analyser
 
