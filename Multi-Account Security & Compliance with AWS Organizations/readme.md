@@ -101,10 +101,6 @@ https://docs.aws.amazon.com/config/latest/developerguide/manual-setup.title.html
 -	Taslk about the rules that have been set
 
 
-
-
-#### Writing a custom config rule with Lambda (EC2 instances must have a specific tags)
-
 #### Demonstrating auto-remediation (if encryption is disabled -> re-enable automatically)
 
 #### Show how Config aggregates compliance across all accounts in the Organization.
@@ -121,6 +117,8 @@ https://aws.amazon.com/blogs/devops/how-to-centrally-manage-aws-config-rules-acr
 - Deploy Conformance packs ()
 - Write Custom Config rules with lambda (EC2 instance must have specific tags)
 - Demonstrate auto remediation (IF encryption is disabled -> re-enable automatically) 
+
+#### Writing a custom config rule with Lambda (EC2 instances must have a specific tags) -- ADDING THIS AT A LATER DATE....
 
 
 ### IAM Identity Center
