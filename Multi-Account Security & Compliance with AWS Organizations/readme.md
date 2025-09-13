@@ -101,7 +101,12 @@ https://docs.aws.amazon.com/config/latest/developerguide/manual-setup.title.html
 -	Taslk about the rules that have been set
 
 
-#### Demonstrating auto-remediation (if encryption is disabled -> re-enable automatically)
+#### Demonstrating auto-remediation (if versioning is disabled -> re-enable automatically)
+-	Talk about the steps I have taken to set this up
+-	What I have done to troubleshoot the issue
+-	Talk about using the cmd line and using this cmd “aws configservice describe-remediation-execution-status --config-rule-name s3-bucket-versioning-enabled”
+-	Talk about the time it has taken and show the role (Policy) that I have used to allow SSM to access those resources automatically.
+
 
 #### Show how Config aggregates compliance across all accounts in the Organization.
 #### Deploying to multi accounts within organizations
