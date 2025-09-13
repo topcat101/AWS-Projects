@@ -91,7 +91,7 @@ https://docs.aws.amazon.com/config/latest/developerguide/manual-setup.title.html
 -	Talk about what I have done so far to remediate these actions, show examples to the viewer so we can assist them with this cruise.
 -	
 -	Talk how I have enabled MFA based on bucket deletions for S3-Bucket-versioning enabled, what administrative privileges I have had to give to a user.
--	Enable aws access keys for root user.
+-	Enable aws access keys for root user. (Not advisable)
 
 #### Deploying a Conformance packs
 -	Operational Best practices for aws identity and access management.
@@ -116,14 +116,8 @@ https://docs.aws.amazon.com/config/latest/developerguide/cpack-prerequisites.htm
 https://aws.amazon.com/blogs/devops/how-to-centrally-manage-aws-config-rules-across-multiple-aws-accounts/
 
 #### Notes
-- Enable organization-wide Config rules to track compliance.
-- Ensure all S3 buckets have encryption, all IAM users have MFA enabled, and CloudTrail is enabled in every account.
-- Ensure every user has MFA enabled.
-- Deploy Conformance packs ()
 - Write Custom Config rules with lambda (EC2 instance must have specific tags)
-- Demonstrate auto remediation (IF encryption is disabled -> re-enable automatically) 
-
-#### Writing a custom config rule with Lambda (EC2 instances must have a specific tags) -- ADDING THIS AT A LATER DATE....
+- Writing a custom config rule with Lambda (EC2 instances must have a specific tags) -- ADDING THIS AT A LATER DATE....
 
 
 ### IAM Identity Center
