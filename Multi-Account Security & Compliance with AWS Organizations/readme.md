@@ -1,6 +1,6 @@
 ### Introduction
 
-### AWS Organizations
+### Setting up AWS Organizations
 
 #### What is AWS Organizations
 
