@@ -1,6 +1,6 @@
-### Introduction
+# Overview
 
-### Setting up AWS Organizations
+# Setting up AWS Organizations
 
 #### What is AWS Organizations
 
@@ -68,7 +68,7 @@ To assign a policy, select the SCP you created and then choose the target OU you
 <img width="602" height="531" alt="Picture4" src="https://github.com/user-attachments/assets/578d352a-0e2e-47e9-9e67-fd9877e0544f" />
 
 
-### Adopting AWS Config & applying Conformance packs
+# Adopting AWS Config & applying Conformance packs
 #### What is AWS Config
 AWS Config provides records of the configuration of your resources within your environment. This enables tracking of changes over time, allowing you to see who changed what and when within your accounts. Config also validates compliance against rules that you define—for example, ensuring that all S3 buckets have encryption enabled. If a bucket does not meet this requirement, AWS Config can use remediation actions to automatically check the encryption configuration and, if it is missing or incorrect, apply the required encryption (such as AES-256). Additionally, Config provides an audit trail to support governance, compliance, and security requirements.
 
