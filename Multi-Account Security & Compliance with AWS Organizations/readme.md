@@ -240,6 +240,75 @@ Expected Result:
 <img width="602" height="27" alt="Picture11" src="https://github.com/user-attachments/assets/1b4f3e51-7a67-4fc5-bf5a-d843c52dbb72" />
 
 
+#### Demonstrating auto-remediation
+If Versioning is disabled -> re-enable automatically
+
+Auto-remediation for Re-enabling Versioning
+
+Auto-remediation for re-enabling versioning (if it is disabled) allows for a smoother process and helps reduce human error compared to doing it manually.
+To begin, navigate to:
+
+AWS Config > Rules > s3-bucket-versioning-enabled > Manage remediation
+
+Once you are in the remediation actions editor, you will be prompted to select a remediation method:
+
+•	Automatic remediation
+
+•	Manual remediation
+
+I chose automatic remediation and provided the following details:
+
+•	Maximum retry attempts: 3
+
+•	Retry time window (in seconds): 60
+
+<img width="602" height="254" alt="Picture12" src="https://github.com/user-attachments/assets/fb9fa018-1e13-4359-9e39-b0ab2df8ccae" />
+
+From there, proceed to the Remediation action details section, where you will select “AWS-ConfigureS3BucketVersioning” as the action to be performed. This will display the details of the action along with the parameters that need to be filled in.
+
+<img width="602" height="346" alt="Picture13" src="https://github.com/user-attachments/assets/b6d7d17d-7a8a-459e-a624-ee3015a33e9f" />
+
+For the Rate limit, I left the field empty.
+
+For the Resource ID parameters, I provided BucketName, which ensures the remediation loops through each bucket to enable versioning.
+
+Within the Parameters section, I configured the following:
+
+•	VersioningState → Enabled
+
+•	AutomationAssumeRole → ARN (to run the SSM actions)
+
+<img width="602" height="410" alt="Picture14" src="https://github.com/user-attachments/assets/1afc11ad-cd26-46fb-87d4-5bfa31749c74" />
+
+If you don’t already have a role for SSM to use, I recommend creating one via the IAM console. When setting up the role, be sure to define SSM as a trusted entity, so that it can assume the role and obtain temporary permissions to access the required resources.
+
+<img width="602" height="97" alt="Picture15" src="https://github.com/user-attachments/assets/59dc8a7c-5e96-40c9-9a2a-91533a5a1275" />
+
+
+Once you have created the role, your AWS Systems Manager (SSM) service will need permissions to access the relevant resources. At minimum, the role should include the following permissions:
+
+•	S3:GetBucketVersioning
+
+•	S3:PutBucketVersioning
+
+<img width="604" height="97" alt="Picture16" src="https://github.com/user-attachments/assets/824c0ebe-0db4-40da-83f8-eb88cdde00f2" />
+
+After attaching the policy, retrieve the ARN of the IAM role and enter it into the Automa-tionAssumeRole parameter.
+
+If your SSM automation is not running as expected, I recommend using the following command:
+
+aws configservice describe-remediation-execution-status --config-rule-name s3-bucket-versioning-enabled
+
+This command provides more context on why the remediation may not be running as intended. It allows you to identify any failed states and view the associated error mes-sages for troubleshooting.
+
+
+
+#### Deploying a Conformance packs
+
+##### What are conformance packs
+
+Conformance packs offer an abundance of predefined rules that you can deploy across your AWS services. These rules may help you align with specific standards, such as PCI-DSS, or implement best practices for your resources, such as the Operational Best Practices for AWS IAM pack.
+
 
 _________________________________________________________________________________________________________________________________________________________________________________________
 # Notes
