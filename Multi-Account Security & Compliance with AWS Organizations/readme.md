@@ -49,7 +49,7 @@ The way I’ve implemented inheritance of the SCPs across the accounts is by ass
   
 To assign a policy, select the SCP you created and then choose the target OU you want to apply it to.
 
--	Demonstrate inheritance of SCPs across accounts (Diagram)
+## Demonstrate inheritance of SCPs across accounts (Diagram)
 
 ##### Deny Disabling CloudTrail or Config
 
