@@ -67,7 +67,195 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 <img width="602" height="531" alt="Picture4" src="https://github.com/user-attachments/assets/578d352a-0e2e-47e9-9e67-fd9877e0544f" />
 
+
+### Adopting AWS Config & applying Conformance packs
+#### What is AWS Config
+AWS Config provides records of the configuration of your resources within your environment. This enables tracking of changes over time, allowing you to see who changed what and when within your accounts. Config also validates compliance against rules that you define—for example, ensuring that all S3 buckets have encryption enabled. If a bucket does not meet this requirement, AWS Config can use remediation actions to automatically check the encryption configuration and, if it is missing or incorrect, apply the required encryption (such as AES-256). Additionally, Config provides an audit trail to support governance, compliance, and security requirements.
+
+#### Manual setup of Config
+You can set up AWS Config in two ways: manually or with the one-click setup. For learning purposes, I chose the manual route. During the configuration process, you can select which resources you want to record. I chose specific resource types, which allowed me to define the following resources to record:
+
+•	AWS S3 Bucket
+
+•	AWS IAM User
+
+•	AWS EC2 Instance
+
+I set the recording frequency to daily (this can be changed later in the Config settings). For the delivery channel, I created an S3 bucket. You can also enable Amazon SNS to receive email notifications of changes detected by AWS Config.
+
+Next, skip the managed rules (we will cover this later) and review your configuration to confirm everything is set up as intended.
+
+<img width="602" height="257" alt="Picture1" src="https://github.com/user-attachments/assets/496867de-731c-40ca-b83d-7a3a57ec81c5" />
+
+Within the AWS Config dashboard, you will see data such as compliance status, noncompliant rules, AWS Config usage metrics, and more. This is where you can find the latest information on what may need to be brought into compliance within your environment. Note that this view is region-specific. For example, my setup is currently configured only for eu-west-2, as I have not yet enabled AWS Config in other regions.
+
+<img width="274" height="543" alt="Picture2" src="https://github.com/user-attachments/assets/7c19405d-bf5d-4c96-83c9-86c79f468334" />
+
+On the right-hand side, you will see the Settings option. Click this section to view more details about the configurations you have set up for your records.
+
+<img width="602" height="222" alt="Picture3" src="https://github.com/user-attachments/assets/af540b5a-74b5-453a-a686-8c133bce9bfc" />
+
+From the Settings menu, locate the Recorder section and click Edit. Here, you can change the recording frequency of your resources from daily to continuous, allowing AWS Config to track changes to your services in real time.
+
+#### Setting up rules
+
+To set up rules within your environment, navigate to:
+
+AWS Config > Rules > Add rule
+
+<img width="602" height="244" alt="Picture4" src="https://github.com/user-attachments/assets/d3bfd2ea-87c3-424e-99ac-4be8e34ff436" />
+
+From there, you will be presented with a variety of AWS Managed Rules. You can search for and select the rules you want to apply, such as:
+
+•	IAM-user-MFA-enabled
+
+•	S3-bucket-versioning-enabled
+
+•	approved-amis-by-tag
+
+These rules must be added individually, as the rule type does not allow multiple selections at once.
+
+##### Approved-amis-by-tag
+
+<img width="599" height="314" alt="Picture5" src="https://github.com/user-attachments/assets/60afaf21-8195-40cb-a853-2f4234f975fa" />
+
+For the parameters, I set the value as follows:
+
+•	Status: Approved
+
+This means that for the selected AMI from the EC2 instance, the tag must be configured with:
+
+•	Key: Status
+
+•	Value: Approved
+
+After setting up the rule, you may notice that your resource in the Resource Scope section shows as Noncompliant. This happens because the AMI does not yet have the required tags.
+
+To fix this, I needed to set up the tags for the AMI ID. Here’s how I did it:
+
+1.	Go to the EC2 console.
+
+2.	Select your instance and gather its details, such as the AMI ID.
+
+3.	Open AWS CloudShell and run the following command:
+
+aws ec2 create-tags \
+    --resources <AMI-ID> \  Place your AMI ID
+   --tags Key=Status,Value=Approved
+
+This command allowed me to tag my AMI with the required key and value, ensuring compliance.
+
+After doing this, go back to the Rules Dashboard to check whether the resource is now Compliant.
+
+•	If it still shows as Noncompliant, click Actions > Re-evaluate.
+
+•	If the status remains Noncompliant, check your Settings to confirm that the recording frequency is set to Continuous rather than Daily.
+
+Expected Output:
+
+Once configured correctly, the rule status should change to Compliant.
+
+You will see this reflected when you change the Resource In Scope filter to Compliant or All.
+
+<img width="602" height="57" alt="Picture6" src="https://github.com/user-attachments/assets/e06ba6c3-7dd6-4f24-a20e-ff0f76d42db8" />
+
+##### IAM-user-MFA-enabled
+
+<img width="602" height="498" alt="Picture7" src="https://github.com/user-attachments/assets/250b1757-dc46-46b3-b0e8-fc4d23201e1f" />
+
+For this rule, I set the frequency to 1 hour.
+
+Once the rule is deployed, AWS Config will identify any IAM users that do not have MFA enabled and mark them as Noncompliant.
+
+You should see a list of IAM users flagged as requiring MFA in order to become compliant
+
+<img width="602" height="113" alt="Picture8" src="https://github.com/user-attachments/assets/4177b590-a4bc-4373-9e36-b77c6abbeb7d" />
+
+To make a user compliant with the IAM-user-MFA-enabled rule:
+
+1.	Open the IAM Console and navigate to Users.
+
+2.	Select a user from the Noncompliant list.
+
+3.	At the top of the user details page, locate the notification indicating that the user does not have MFA enabled.
+
+4.	Click the highlighted prompt to begin enabling MFA.
+
+5.	Follow the setup wizard to configure MFA for the user (for example, using a virtual MFA device or hardware token).
+
+The IAM user will be marked as Compliant in AWS Config once MFA has been success-fully enabled
+
+<img width="602" height="60" alt="Picture9" src="https://github.com/user-attachments/assets/70f3cdd4-67e4-423e-a4d2-4fde9b489ffa" />
+
+##### S3-bucket-versioning-enabled
+
+When creating this rule, you will see the parameter isMfaEnabled. This option ensures that MFA Delete is required when deleting an S3 bucket. In that case, the root account MFA device must be used as confirmation.
+
+Checking Noncompliant Buckets
+
+After creating the rule, you may notice that some S3 buckets are marked as Noncompliant.
+
+1.	Go to the S3 Console.
+
+2.	Select a bucket from the noncompliant list.
+
+3.	Open the Properties tab.
+
+4.	Locate Bucket Versioning.
+
+5.	If versioning is disabled, click Edit and enable it.
+
+Enabling MFA Delete
+
+To enable MFA Delete on an S3 bucket, follow these steps:
+
+1.	Create access keys for the root account (temporary use only).
+
+2.	Open AWS CloudShell (or a local terminal configured with the AWS CLI).
+
+3.	Configure the root profile with your keys
+
+aws configure --profile root-mfa
+
+4.	Enable versioning with MFA Delete on the target bucket:
+
+aws s3api put-bucket-versioning --bucket bucket-name --versioning-configuration Status=Enabled,MFADelete=Enabled --mfa "arn:aws:iam::account-id:mfa/root-account-mfa-device mfa-token" --profile root-mfa
+
+This command attaches the root MFA device to the bucket, enabling MFA Delete.
+
+
+Security Best Practice
+
+Once the configuration is complete, delete the temporary root access keys. Leaving root keys active is considered a security risk.
+
+Expected Result:
+
+•	The S3 bucket shows Versioning: Enabled.
+
+•	MFA Delete is enforced for bucket deletion.
+
+
+<img width="602" height="89" alt="Picture10" src="https://github.com/user-attachments/assets/c259b49b-0b8b-4785-b7b2-8ce48997994b" />
+
+<img width="602" height="27" alt="Picture11" src="https://github.com/user-attachments/assets/1b4f3e51-7a67-4fc5-bf5a-d843c52dbb72" />
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________
+# Notes
+
 ### AWS Config
+
+
+
+
+
+
+
+
+
+
+
 #### What is AWS Config
 
 AWS Config provides records of the configuration of your resources within your environment. This enables tracking of changes over time, allowing you to see who changed what and when within your accounts. Config also validates compliance against rules that you define, for example, ensuring that all S3 buckets have encryption enabled. If a bucket does not meet this requirement, AWS Config can invoke a Lambda function to check the encryption configuration and, if it is missing or incorrect, automatically apply the required encryption (such as AES-256). Nevertheless, Config allows for an audit trail for the governance, compliance and security requirements.
