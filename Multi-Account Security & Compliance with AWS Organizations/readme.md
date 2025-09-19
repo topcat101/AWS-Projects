@@ -2,7 +2,7 @@
 
 # Setting up AWS Organizations
 
-#### What is AWS Organizations
+## What is AWS Organizations
 
 AWS Organizations is a service that allows you to centrally manage and govern multiple AWS accounts. It lets you group accounts into a hierarchy, apply policies to enforce compliance and security, consolidate billing, and share resources across accounts. This makes it easier to maintain control environments with multiple teams, workloads, or business units.
 
