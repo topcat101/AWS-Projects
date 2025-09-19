@@ -280,7 +280,10 @@ Within the Parameters section, I configured the following:
 
 <img width="602" height="410" alt="Picture14" src="https://github.com/user-attachments/assets/1afc11ad-cd26-46fb-87d4-5bfa31749c74" />
 
-If you don’t already have a role for SSM to use, I recommend creating one via the IAM console. When setting up the role, be sure to define SSM as a trusted entity, so that it can assume the role and obtain temporary permissions to access the required resources.
+If you don’t already have a role for SSM to use, I recommend creating one via the IAM console. When setting up the role, be sure to define SSM as a trusted entity (Service principal), so that it can assume the role and obtain temporary permissions to access the required resources.
+
+##### Service principles
+A service principal is how you tell AWS which service (like Config, EC2, or Lambda) is allowed to use a role, so that the service can then perform actions in your account using that role’s permissions.
 
 <img width="602" height="97" alt="Picture15" src="https://github.com/user-attachments/assets/59dc8a7c-5e96-40c9-9a2a-91533a5a1275" />
 
