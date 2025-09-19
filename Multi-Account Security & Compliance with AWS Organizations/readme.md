@@ -6,11 +6,11 @@
 
 AWS Organizations is a service that allows you to centrally manage and govern multiple AWS accounts. It lets you group accounts into a hierarchy, apply policies to enforce compliance and security, consolidate billing, and share resources across accounts. This makes it easier to maintain control environments with multiple teams, workloads, or business units.
 
-#### What are Organizations Accounts
+## What are Organizations Accounts
 
 An AWS Organizations account acts as a separate, isolated environment within the organization. Each account can contain its own resources, services, and permissions. By structuring workloads into different accounts, you can isolate environments (such as production, development, or testing) and control what users or services can and cannot access. This separation improves security, governance, and cost management across the organization.
 
-#### Creating the Organization Account
+## Creating the Organization Account
 
 Within AWS Organizations, start by selecting Create an organization. Once the organization is created, you will be taken to the AWS accounts page in the navigation pane.
 
@@ -29,7 +29,7 @@ Once the OU is created, you can use the Actions menu again to move your account 
 
 Due to the limitations of this setup, I moved my management account into the MainApp OU. However, this is not a recommended practice. The management account should remain within the root folder to ensure proper governance, security, and account management across the organization.
 
-#### Applying Service Control Policies (SCP)
+## Applying Service Control Policies (SCP)
 
 Service Control Policies (SCPs) allow your organization to enforce controlled measures within a hierarchy using Organizational Units (OUs). For example, if you apply a policy at the root level that restricts access to only the London and Ireland regions, then all ac-counts under that organization will only be able to access those regions. This provides greater control over what IAM users can and cannot access, thereby enhancing overall security.
 
@@ -51,28 +51,28 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 ## Demonstrate inheritance of SCPs across accounts (Diagram)
 
-##### Deny Disabling CloudTrail or Config
+### Deny Disabling CloudTrail or Config
 
 <img width="602" height="378" alt="Picture1" src="https://github.com/user-attachments/assets/a9c71213-9862-4b21-b053-434cb0f6f94a" />
 
-##### Deny creation of IAM users
+### Deny creation of IAM users
 
 <img width="602" height="329" alt="Picture2" src="https://github.com/user-attachments/assets/516bc327-0c10-4add-9ba1-108722b47295" />
 
-##### Restrict regions (only allow EU-WEST-2 or EU-WEST-1)
+### Restrict regions (only allow EU-WEST-2 or EU-WEST-1)
 
 <img width="602" height="478" alt="Picture3" src="https://github.com/user-attachments/assets/f6bd827c-4e22-44fb-bb8d-812e9fd28926" />
 
-##### Deny EC2 instance type not on the approved list (security control)
+### Deny EC2 instance type not on the approved list (security control)
 
 <img width="602" height="531" alt="Picture4" src="https://github.com/user-attachments/assets/578d352a-0e2e-47e9-9e67-fd9877e0544f" />
 
 
 # Adopting AWS Config & applying Conformance packs
-#### What is AWS Config
+## What is AWS Config
 AWS Config provides records of the configuration of your resources within your environment. This enables tracking of changes over time, allowing you to see who changed what and when within your accounts. Config also validates compliance against rules that you define—for example, ensuring that all S3 buckets have encryption enabled. If a bucket does not meet this requirement, AWS Config can use remediation actions to automatically check the encryption configuration and, if it is missing or incorrect, apply the required encryption (such as AES-256). Additionally, Config provides an audit trail to support governance, compliance, and security requirements.
 
-#### Manual setup of Config
+## Manual setup of Config
 You can set up AWS Config in two ways: manually or with the one-click setup. For learning purposes, I chose the manual route. During the configuration process, you can select which resources you want to record. I chose specific resource types, which allowed me to define the following resources to record:
 
 •	AWS S3 Bucket
@@ -97,7 +97,7 @@ On the right-hand side, you will see the Settings option. Click this section to 
 
 From the Settings menu, locate the Recorder section and click Edit. Here, you can change the recording frequency of your resources from daily to continuous, allowing AWS Config to track changes to your services in real time.
 
-#### Setting up rules
+## Setting up rules
 
 To set up rules within your environment, navigate to:
 
@@ -115,7 +115,7 @@ From there, you will be presented with a variety of AWS Managed Rules. You can s
 
 These rules must be added individually, as the rule type does not allow multiple selections at once.
 
-##### Approved-amis-by-tag
+### Approved-amis-by-tag
 
 <img width="599" height="314" alt="Picture5" src="https://github.com/user-attachments/assets/60afaf21-8195-40cb-a853-2f4234f975fa" />
 
@@ -159,7 +159,7 @@ You will see this reflected when you change the Resource In Scope filter to Comp
 
 <img width="602" height="57" alt="Picture6" src="https://github.com/user-attachments/assets/e06ba6c3-7dd6-4f24-a20e-ff0f76d42db8" />
 
-##### IAM-user-MFA-enabled
+### IAM-user-MFA-enabled
 
 <img width="602" height="498" alt="Picture7" src="https://github.com/user-attachments/assets/250b1757-dc46-46b3-b0e8-fc4d23201e1f" />
 
@@ -187,7 +187,7 @@ The IAM user will be marked as Compliant in AWS Config once MFA has been success
 
 <img width="602" height="60" alt="Picture9" src="https://github.com/user-attachments/assets/70f3cdd4-67e4-423e-a4d2-4fde9b489ffa" />
 
-##### S3-bucket-versioning-enabled
+### S3-bucket-versioning-enabled
 
 When creating this rule, you will see the parameter isMfaEnabled. This option ensures that MFA Delete is required when deleting an S3 bucket. In that case, the root account MFA device must be used as confirmation.
 
@@ -240,7 +240,7 @@ Expected Result:
 <img width="602" height="27" alt="Picture11" src="https://github.com/user-attachments/assets/1b4f3e51-7a67-4fc5-bf5a-d843c52dbb72" />
 
 
-#### Demonstrating auto-remediation
+## Demonstrating auto-remediation
 If Versioning is disabled -> re-enable automatically
 
 Auto-remediation for Re-enabling Versioning
@@ -303,9 +303,9 @@ This command provides more context on why the remediation may not be running as 
 
 
 
-#### Deploying a Conformance packs
+## Deploying a Conformance packs
 
-##### What are conformance packs
+### What are conformance packs
 
 Conformance packs offer an abundance of predefined rules that you can deploy across your AWS services. These rules may help you align with specific standards, such as PCI-DSS, or implement best practices for your resources, such as the Operational Best Practices for AWS IAM pack.
 
