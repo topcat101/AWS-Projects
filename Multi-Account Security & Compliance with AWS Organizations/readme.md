@@ -140,7 +140,7 @@ To fix this, I needed to set up the tags for the AMI ID. Here’s how I did it:
 3.	Open AWS CloudShell and run the following command:
 
 aws ec2 create-tags \
-    --resources <AMI-ID> \ Place your AMI ID
+    --resources AMI-ID \ Place your AMI ID
    --tags Key=Status,Value=Approved
 
 This command allowed me to tag my AMI with the required key and value, ensuring compliance.
