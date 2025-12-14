@@ -312,6 +312,21 @@ This command provides more context on why the remediation may not be running as 
 
 Conformance packs offer an abundance of predefined rules that you can deploy across your AWS services. These rules may help you align with specific standards, such as PCI-DSS, or implement best practices for your resources, such as the Operational Best Practices for AWS IAM pack.
 
+### Deploying a conformance pack
+
+To deploy a conformance pack, you need to navigate to AWS Config > Conformance Packs > Deploy Conformance Pack. This takes you through a setup process where you are asked whether you’d like to use a sample template or upload a template you’ve prepared. I chose to use a sample template, specifically the “Operational Best Practices for AWS Identity and Access Management” pack.
+
+Once you click Next, you’ll be asked to provide a name for the conformance pack (you can choose any name you like). You’ll then see a list of parameters where you need to supply values. After that, you can review your configuration and deploy the pack. The deployment may take some time, depending on the resources you already have set up.
+
+Once the conformance pack has been deployed to your account, you’ll be provided with a dashboard that displays your compliance score.
+
+<img width="940" height="326" alt="image" src="https://github.com/user-attachments/assets/3ed826cd-3ec0-4f69-a35c-41b04dec0905" />
+
+If you’d like to see what steps are required to reach 100% compliance, you can click the View button. Inside the package, you’ll find the parameters you selected (or left as default) along with the rules included in the chosen pack in my case, the IAM Operational Best Practices. To improve your compliance score, you can either remediate the findings manually or enable auto-remediation to take action against non-compliant resources. Examples include enforcing MFA for user accounts, requiring longer passwords for users with access, or rotating access keys after a specified number of days.
+
+<img width="940" height="284" alt="image" src="https://github.com/user-attachments/assets/44b2742d-381b-45db-9e41-b68205666592" />
+
+
 
 
 ### IAM Identity Center
