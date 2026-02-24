@@ -328,6 +328,24 @@ If you’d like to see what steps are required to reach 100% compliance, you can
 
 <img width="940" height="284" alt="image" src="https://github.com/user-attachments/assets/44b2742d-381b-45db-9e41-b68205666592" />
 
+## Config aggregates compliance across all accounts in the Organization.
+### What are Config Aggregators
+
+AWS Config Aggregator allows for you to collect configurations and compliance data across multiple accounts and regions if you have Config enabled across those accounts, within those regions. 
+
+### Setting up Aggregation (Management Account) 
+First, you need to set up the account that will act as the main point for the aggregator (typically the Security or Auditor account within organizations). In our case, this will be the management account.
+To create the aggregator, navigate to: AWS Config > Aggregators > Add aggregator.
+Within this section:
+•	Tick the option to allow AWS Config to replicate data from source accounts into the aggregator account.
+•	Provide a name for the aggregator.
+•	Select “Add all accounts in my organization.”
+•	Choose the regions you want to include.
+•	Click Save.
+AWS Config will then begin pulling compliance data from all accounts across the organization.
+Aggregators dashboard (Management Account)
+
+<img width="602" height="242" alt="Setting up Aggregation (Management Account)" src="https://github.com/user-attachments/assets/da412f0b-08c0-4037-bc4a-fbc99786b154" />
 
 
 
