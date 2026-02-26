@@ -53,9 +53,9 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 ## Demonstrate inheritance of SCPs across accounts (Diagram)
 
-### Deny Disabling CloudTrail or Config
+### Deny Disabling CloudTrail or Config (Unless a specific user) 
 
-<img width="602" height="378" alt="Picture1" src="https://github.com/user-attachments/assets/a9c71213-9862-4b21-b053-434cb0f6f94a" />
+<img width="496" height="292" alt="Deny disabiling CloudTrail or Config (Unless a specific User)" src="https://github.com/user-attachments/assets/38a1252d-6777-49f0-b85d-0c0769ebedfc" />
 
 ### Deny creation of IAM users
 
