@@ -57,9 +57,9 @@ To assign a policy, select the SCP you created and then choose the target OU you
 
 <img width="496" height="292" alt="Deny disabiling CloudTrail or Config (Unless a specific User)" src="https://github.com/user-attachments/assets/38a1252d-6777-49f0-b85d-0c0769ebedfc" />
 
-### Deny creation of IAM users
+### Deny creation of IAM users, unless specific user (Force use of identity Center)
 
-<img width="602" height="329" alt="Picture2" src="https://github.com/user-attachments/assets/516bc327-0c10-4add-9ba1-108722b47295" />
+<img width="561" height="289" alt="Deny creation of IAM users, unless specific user (Force use of identity Center)" src="https://github.com/user-attachments/assets/b29df0c2-b30f-4483-ab7b-b24f9ccc3cba" />
 
 ### Restrict regions (only allow EU-WEST-2 or EU-WEST-1)
 
