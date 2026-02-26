@@ -42,11 +42,8 @@ https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_
 The way I’ve implemented inheritance of the SCPs across the accounts is by assigning policies to Organizational Units (OUs). This allows access to be controlled as it flows down the hierarchy. For example, I have:
 
 -	Denied the ability to disable CloudTrail and Config, ensuring that no one can turn these off in the DEV OU.
-  
--	Restricted regions at the Root OU level.
-  
 -	Denied the creation of IAM users in the Sandbox OU.
-  
+-	Restricted regions at the Root OU level.
 -	Denied certain EC2 instance types in the Production OU.
   
 To assign a policy, select the SCP you created and then choose the target OU you want to apply it to.
