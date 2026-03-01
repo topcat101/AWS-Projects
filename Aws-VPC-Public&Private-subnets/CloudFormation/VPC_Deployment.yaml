@@ -1,1 +1,283 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Challenge template
 
+Parameters:
+
+  VPCSubnetCidr:
+    Type: String
+    Default: 10.0.0.0/16
+
+  PrivateSubnetCidr:
+    Type: String
+    Default: 10.0.0.0/20
+
+  PublicSubnetCidr:
+    Type: String
+    Default: 10.0.16.0/20
+
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 KeyPair
+
+Resources:
+
+  #################################################################
+  # This shows that I have created the VPC, IGW, & the connection #
+  #################################################################
+
+  NewVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VPCSubnetCidr
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: NewVPC
+  
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: InternetGateway
+  
+  ConnectIGWtoVPC:
+    Type: AWS::EC2::VPCGatewayAttachment
+    DependsOn:
+      - NewVPC
+      - InternetGateway
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref NewVPC
+
+  ########################################################
+  # Public Route Table and route have now been corrected #
+  ########################################################
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn:
+      - NewVPC
+    Properties:
+      VpcId: !Ref NewVPC
+      Tags:
+        - Key: Name
+          Value: PublicRouteTable
+
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn:
+      - InternetGateway
+      - PublicRouteTable
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref PublicRouteTable
+
+#########################################
+# Public Subnet and Public Subnet Route #
+#########################################
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    DependsOn: NewVPC
+    Properties:
+      CidrBlock: !Ref PublicSubnetCidr
+      VpcId: !Ref NewVPC
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: PublicSubnet
+
+  PublicRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn:
+      - PublicRouteTable
+      - PublicSubnet
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet
+
+#########################
+# Public Security Group #
+#########################
+
+  PublicSecurityGroups:
+    Type: AWS::EC2::SecurityGroup
+    DependsOn: 
+      - NewVPC
+    Properties:
+      GroupDescription: Enable access to Public Server
+      VpcId: !Ref NewVPC
+      
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: PublicSecurityGroups
+
+###################
+# Public Instance #
+###################
+
+  PublicEC2Instance:
+    Type: AWS::EC2::Instance
+    DependsOn:
+      - PublicSecurityGroups
+      - PublicSubnet
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t3.micro
+      KeyName: !Ref KeyName
+      SecurityGroupIds: 
+        - !Ref PublicSecurityGroups
+      SubnetId: !Ref PublicSubnet
+      Tags:
+        - Key: Name
+          Value: PublicEC2Instance
+
+######################
+# Public Nat Gateway #
+######################
+
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: ElasticIP
+
+  PrivateRouteTable:
+      Type: AWS::EC2::RouteTable
+      DependsOn:
+        - NewVPC
+      Properties:
+        VpcId: !Ref NewVPC
+        Tags:
+          - Key: Name
+            Value: PrivateRouteTable
+  
+  PublicNATGateway:
+    Type: AWS::EC2::NatGateway
+    DependsOn:
+      - PublicSubnet
+    Properties:
+      AllocationId: !GetAtt ElasticIP.AllocationId
+      SubnetId: !Ref PublicSubnet
+      Tags:
+        - Key: Name
+          Value: PublicNATGateway
+
+  RouteNatGateway:
+    Type: AWS::EC2::Route
+    DependsOn:
+      - PublicNATGateway
+      - PrivateRouteTable
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      NatGatewayId: !Ref PublicNATGateway
+      DestinationCidrBlock: 0.0.0.0/0
+
+###########################################
+# Private Subnet and Private Subnet Route #
+###########################################
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    DependsOn: 
+      - NewVPC
+    Properties:
+      CidrBlock: !Ref PrivateSubnetCidr
+      VpcId: !Ref NewVPC
+      Tags:
+        - Key: Name
+          Value: PrivateSubnet
+
+  PrivateRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn:
+      - PrivateRouteTable
+      - PrivateSubnet
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet
+
+##########################
+# Private Security Group #
+##########################
+
+  PrivateSecurityGroups:
+    Type: AWS::EC2::SecurityGroup
+    DependsOn: 
+      - NewVPC
+    Properties:
+      GroupDescription: Enable access to Private Server
+      VpcId: !Ref NewVPC
+      
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: PrivateSecurityGroups
+
+####################
+# Private Instance #
+####################
+
+  PrivateEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t3.micro
+      KeyName: !Ref KeyName
+      SecurityGroupIds: 
+        - !Ref PrivateSecurityGroups
+      SubnetId: !Ref PrivateSubnet
+      Tags:
+        - Key: Name
+          Value: PrivateEC2Instance
+
+###########
+# Outputs
+###########
+
+Outputs:
+
+  NewVPCDefaultSecurityGroup:
+    Value: !Sub ${NewVPC.DefaultSecurityGroup}
