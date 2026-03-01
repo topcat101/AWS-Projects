@@ -334,11 +334,17 @@ AWS Config Aggregator allows for you to collect configurations and compliance da
 First, you need to set up the account that will act as the main point for the aggregator (typically the Security or Auditor account within organizations). In our case, this will be the management account.
 To create the aggregator, navigate to: AWS Config > Aggregators > Add aggregator.
 Within this section:
+
 •	Tick the option to allow AWS Config to replicate data from source accounts into the aggregator account.
+
 •	Provide a name for the aggregator.
+
 •	Select “Add all accounts in my organization.”
+
 •	Choose the regions you want to include.
+
 •	Click Save.
+
 AWS Config will then begin pulling compliance data from all accounts across the organization.
 Aggregators dashboard (Management Account)
 
